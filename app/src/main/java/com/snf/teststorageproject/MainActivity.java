@@ -29,11 +29,12 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String Path_Full = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/testText";
-    private String fileName;
+    private String fileName, fileNumber ;
     private EditText editText;
     private Button save_button, copy_button, content_read_button, file_list_lookup, file_delete;
     private TextView content_read_tv, file_list_tv;
     private int i;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         file_delete = findViewById(R.id.file_delete);
         file_delete.setOnClickListener(this);
         file_list_tv = findViewById(R.id.file_list_tv);
-        permission();
 
+        permission();
+        getFileList(false);
     }
 
     /**
@@ -86,15 +88,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      **/
     public void writeLog() {
 
-        File folder = new File(Path_Full);
-        fileName = "테스트 파일_" + i + ".txt";
-        File file = new File(Path_Full + "/" + fileName);
+        if (editText.getText().equals("")) {
+            Toast.makeText(this, "저장할 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        fileName = i + 1 + ".테스트 파일.txt";
+        File file = new File(Path_Full + File.separator, fileName);
 
         //파일이 없는경우 파일을 생성한후 로그 기록
         if (!file.exists()) {
             //폴더가 없을 때 생성
-            if (!folder.exists()) {
-                folder.mkdir();
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
             }
             try {
                 file.createNewFile();
@@ -103,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         try {
-            BufferedWriter bfw = new BufferedWriter(new FileWriter(Path_Full + "/" + fileName, true));
+            BufferedWriter bfw = new BufferedWriter(new FileWriter(Path_Full + File.separator + fileName, true));
 
             bfw.write(editText.getText().toString());
             bfw.write("\n");
@@ -125,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 내부저장소로 파일 이동하는 매서드 , 이미 파일이 있는 경우 덮어 쓰기
      **/
     private void copy(String path_Full, String name) throws IOException {
-        InputStream in = new FileInputStream(path_Full);
+        InputStream in = new FileInputStream(path_Full + name);
         try {
             FileOutputStream fos = openFileOutput(name, MODE_PRIVATE);
             try {
@@ -154,9 +160,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String data;
         FileInputStream fis;
         try {
-            fis = openFileInput(editText.getText().toString());
+            fis = openFileInput(fileNumber);
 
-            if(fis.available()<0){
+            if (fis.available() < 0) {
+                Toast.makeText(this, "값을 다시 입력해주세요 " + buffer, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -174,9 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        if(!buffer.toString().equals(""))
-        Toast.makeText(this, "파일을 읽어 왔습니다. 값 : " + buffer, Toast.LENGTH_SHORT).show();
-
+        if (!buffer.toString().equals(""))
+            Toast.makeText(this, "파일을 읽어 왔습니다. 값 : " + buffer, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -186,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      **/
     private void file_delete() {
 
-        if (deleteFile(editText.getText().toString())) {
+        if (deleteFile(fileNumber)) {
             Toast.makeText(this, "파일 삭제 완료", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "파일 삭제 실패", Toast.LENGTH_SHORT).show();
@@ -219,15 +225,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 내부저장소에 파일 목록 확인하는 매서드
      **/
-    private void getFileList() {
+    private void getFileList(boolean fileSearch) {
 
         String list = "";
-        for (String a : this.fileList()) {
-            list += a;
-            list += "\n";
-            Log.d("MainActivity", "파일 목록: " + a);
+        if (this.fileList().length > 0) {
+            for (String a : this.fileList()) {
+                list += a;
+                list += "\n";
+                if (fileSearch) {
+                    if(a.contains(fileNumber)){
+                        fileNumber = a;
+                    }
+                }
+                Log.d("MainActivity", "파일 목록: " + a);
+            }
+            file_list_tv.setText(list);
+        } else {
+            file_list_tv.setText("파일 리스트가 없습니다.");
         }
-        file_list_tv.setText(list);
+
         Log.d("MainActivity", "파일이름: " + fileName);
 
     }
@@ -243,23 +259,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.file_copy:
 
                 try {
-                    copy(Path_Full + "/" + fileName, fileName);
+                    copy(Path_Full + File.separator, fileName);
+                    getFileList(false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
 
             case R.id.content_read_button:
+                fileNumber = editText.getText().toString().substring(0,1);
+                getFileList(true);
                 readFile();
                 break;
 
             case R.id.file_list_lookup:
-                getFileList();
+                getFileList(false);
                 break;
 
             case R.id.file_delete:
+                fileNumber = editText.getText().toString().substring(0,1);
+                getFileList(true);
                 file_delete();
-                getFileList();
+                getFileList(false);
                 break;
 
 

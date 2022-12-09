@@ -20,14 +20,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="파일 저장" />
+        android:text="외장 메모리에 파일 저장" />
 
     <Button
         android:id="@+id/file_copy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="파일 내부로 복사" />
+        android:text="파일 내장 메모리로 복사" />
 
 
     <Button
@@ -51,8 +51,6 @@
         android:layout_marginBottom="20dp"
         android:text="파일 삭제" />
 
-
-
     <TextView
         android:id="@+id/content_read_tv"
         android:layout_width="match_parent"
@@ -74,7 +72,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="파일 목록 표시"
+        android:text="내장 메모리 파일 목록 표시"
         android:textSize="20dp"
         android:textColor="@color/design_default_color_primary"
         android:textStyle="bold" />
@@ -88,7 +86,7 @@
         android:layout_marginEnd="30dp"
         android:background="@null"
         android:gravity="center"
-        android:hint="여기에 값을 입력해주세요"
+        android:hint="저장은 값 , 조회&amp;삭제는 &quot;N번&quot; 입력"
         android:lines="1"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
