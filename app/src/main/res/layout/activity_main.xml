@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    <Button
+        android:id="@+id/file_save_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="파일 저장" />
+
+    <Button
+        android:id="@+id/file_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="파일 내부로 복사" />
+
+
+    <Button
+        android:id="@+id/content_read_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="파일 값 확인" />
+
+
+    <Button
+        android:id="@+id/file_list_lookup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="파일 목록 조회" />
+
+    <Button
+        android:id="@+id/file_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="파일 삭제" />
+
+
+
+    <TextView
+        android:id="@+id/content_read_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="텍스트 파일 내용 표시"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/file_list_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="파일 목록 표시"
+        android:textSize="20dp"
+        android:textColor="@color/design_default_color_primary"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/editTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="여기에 값을 입력해주세요"
+        android:lines="1"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
+    </LinearLayout>
+</ScrollView>
