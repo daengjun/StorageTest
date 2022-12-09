@@ -1,5 +1,5 @@
 # StorageTest
-**외부저장소에서 내부저장소로 파일 복사하는 예제입니다.**  
+> **외부저장소에서 내부저장소로 파일 복사하는 예제입니다.**  
 
 
 ![그림2](https://user-images.githubusercontent.com/98893006/206625468-b320f86c-0c30-4ee7-bf11-e3826cd866b4.jpg)  
