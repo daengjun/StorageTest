@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String Path_Full = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/testText";
-    private String fileName, fileNumber ;
+    private String fileName, fileNumber;
     private EditText editText;
     private Button save_button, copy_button, content_read_button, file_list_lookup, file_delete;
     private TextView content_read_tv, file_list_tv;
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 list += a;
                 list += "\n";
                 if (fileSearch) {
-                    if(a.contains(fileNumber)){
+                    if (a.contains(fileNumber)) {
                         fileNumber = a;
                     }
                 }
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.content_read_button:
-                fileNumber = editText.getText().toString().substring(0,1);
+                fileNumber = editText.getText().toString();
                 getFileList(true);
                 readFile();
                 break;
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.file_delete:
-                fileNumber = editText.getText().toString().substring(0,1);
+                fileNumber = editText.getText().toString();
                 getFileList(true);
                 file_delete();
                 getFileList(false);
