@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String Path_Full = Environment.getExternalStorageDirectory().getAbsolutePath() + "/download/testText";
-    private String fileName, fileNumber;
+    private String fileName, fileNumber ;
     private EditText editText;
     private Button save_button, copy_button, content_read_button, file_list_lookup, file_delete;
     private TextView content_read_tv, file_list_tv;
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fos.close();
             }
         } finally {
-            new File(path_Full).delete();
+            new File(path_Full + File.separator + name).delete();
             in.close();
         }
         Toast.makeText(this, "파일 복사가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -233,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 list += a;
                 list += "\n";
                 if (fileSearch) {
-                    if (a.contains(fileNumber)) {
+                    if(a.contains(fileNumber)){
                         fileNumber = a;
-                    }
+                    };
                 }
                 Log.d("MainActivity", "파일 목록: " + a);
             }
@@ -267,7 +267,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.content_read_button:
-                fileNumber = editText.getText().toString();
+                if(!editText.getText().toString().contains("번")){
+                    Toast.makeText(this,"다시 입력해주세요",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                fileNumber = editText.getText().toString().substring(0,1);
+
                 getFileList(true);
                 readFile();
                 break;
@@ -277,7 +283,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.file_delete:
-                fileNumber = editText.getText().toString();
+                if(!editText.getText().toString().contains("번")){
+                    Toast.makeText(this,"다시 입력해주세요",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                fileNumber = editText.getText().toString().substring(0,1);
                 getFileList(true);
                 file_delete();
                 getFileList(false);
